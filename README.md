@@ -19,7 +19,7 @@ Now you can
 
 or
 
-	jspm install thee	
+	jspm install github:togakangaroo/thee	
 
 and
 
