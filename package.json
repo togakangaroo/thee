@@ -4,7 +4,8 @@
   "description": "Micro-utility to shift the `this` context parameter of functions into the first regular parameter position.",
   "main": "thee.js",
   "scripts": {
-    "test": "test"
+    "test": "mocha --compilers js:babel/register test",
+    "test:watch": "mocha --watch --compilers js:babel/register test"
   },
   "keywords": [
     "this",
@@ -20,6 +21,10 @@
   "license": "MIT",
   "devDependencies": {
     "babel": "^5.2.17",
-    "mocha": "^2.2.4"
+    "mocha": "^2.2.4",
+    "should": "^6.0.1"
+  },
+  "dependencies": {
+    "lodash": "^3.8.0"
   }
 }
