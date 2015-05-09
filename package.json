@@ -8,14 +8,18 @@
   },
   "keywords": [
     "this",
-	"scope",
-	"bind",
-	"apply",
+    "scope",
+    "bind",
+    "apply",
     "utility",
     "object",
     "function",
     "context"
   ],
   "author": "gmauer@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.2.17",
+    "mocha": "^2.2.4"
+  }
 }
