@@ -1,9 +1,14 @@
+//For documentation see the thee.js README file
+
 const callFn = (fn) => function(...args) {
 	return fn.apply(null, [this].concat(args));
 }
+
 let thee = (config, op) => {
 	op || (op = {});
-	let thisCheck = (op.noThisCheck || thee.noThisCheck) ? noop : checkForThisUsageWithToString; 
+	op.noThisCheck !== undefined || (op.noThisCheck = thee.noThisCheck);
+	let thisCheck = op.noThisCheck ? noop : checkForThisUsageWithToString; 
+
 	return (
 		isFunction(config) 
 			?  	thisCheck(config) || callFn(config)
@@ -14,7 +19,10 @@ let thee = (config, op) => {
 	);
 }
 thee.noThisCheck = false;
+
 export default thee
+
+////////////////////////////////////////////////////////////
 
 // is* functions just flat out ripped from lodash
 

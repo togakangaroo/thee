@@ -3,6 +3,8 @@
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
+//For documentation see the thee.js README file
+
 var callFn = function callFn(fn) {
 	return function () {
 		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -12,9 +14,12 @@ var callFn = function callFn(fn) {
 		return fn.apply(null, [this].concat(args));
 	};
 };
+
 var thee = function thee(config, op) {
 	op || (op = {});
-	var thisCheck = op.noThisCheck || thee.noThisCheck ? noop : checkForThisUsageWithToString;
+	op.noThisCheck !== undefined || (op.noThisCheck = thee.noThisCheck);
+	var thisCheck = op.noThisCheck ? noop : checkForThisUsageWithToString;
+
 	return isFunction(config) ? thisCheck(config) || callFn(config) : isObject(config) ? objectMap(config, function (propValue, propName) {
 		return [propName, thee(propValue)];
 	})
@@ -22,7 +27,10 @@ var thee = function thee(config, op) {
 	: config;
 };
 thee.noThisCheck = false;
+
 exports['default'] = thee;
+
+////////////////////////////////////////////////////////////
 
 // is* functions just flat out ripped from lodash
 
