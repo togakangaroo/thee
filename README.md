@@ -69,11 +69,9 @@ $('button').click(fred.sayHi);
 
 Yeah, doesn't work, does it? All of a sudden you're not saying `"Hello from Fred Flintstone"`. That's because the `this` parameter changes out underneath us.
 
-So ok, you might concede. `this` is confusing; but isn't it a necessary evil? It might be dumb, but you can't go around without it. Afterall, `this` is specially, it's not like `this` is just a special case of another language feature, is it?
+So ok, you might concede; `this` is confusing, but isn't it a necessary evil? It might be dumb, but you can't exactly get around without it?. Afterall, `this` is special, it's not like `this` is just another much more familiar language feature in disguise, is it?
 
-And yet it is!
-
-Let me prove it to you.
+Assuming that you fist pumped and screamed out loud *"no it's not!"* let me blow your mind. It is! Let me prove it to you.
 
 Most people are aware that all functions in javascript have a special [`call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) method. 
 
@@ -81,9 +79,9 @@ Most people are aware that all functions in javascript have a special [`call`](h
     doStuff.call(1, 2, 3);
 ```
 
-This says "invoke `doStuff`, set `this` to 1, the first agument to 2, and the second to 3".
+This will invoke `doStuff` while setting `this` to 1, the first agument to 2, and the second to 3".
 
-In fact if you wanted to, you could use *only* `.call` to invoke all functions. In that case we might invoke all functions in our above code in this way. Like this
+In fact if you wanted to, you could use *only* `.call` to invoke all functions in your codebase. In that case we might rewrite the above code in this way.
 
 ```js
 var fred = {
@@ -99,24 +97,24 @@ button.click.call(button, function() {
 });
 ```
 
-this is verbose, but its equivalent to the above. So let's say we only ever invoked functions with `.call`. Let's take a more compelx example
+this is verbose, but equivalent to the previous code. So let's say we only ever invoked functions with `.call`. Let's take a more complex example
 
 ```js
 var function whatAreThings(arg1, arg2) {
-	console.log("Things passed in:", this, arg1, arg2, argumetns[2]);
+	console.log("Things passed in:", this, arg1, arg2, arguments[2]);
 }
 whatAreThings.call("one", "two", "three", "four");
 // Will print
 //   Things passed in: one two three four
 ```
 
-Umm...so how exactly is `this` different from like...any other parameter?
+> Umm (you say) - so how exactly is `this` different from like...any other parameter?
 
 **Now you're getting it!**
 
-`this` is just a parameter! It's just worse because
+`this` is just a parameter! It's in fact worse because
 
-* It's not included in the automatic arguments object
+* it's not included in the automatic arguments object
 * and you don't get to name it in an nice way
 
 Oh and there's the fact that if you *don't* explicitly use `.call` the programming language [*takes a guess* at what you want `this` to be](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
@@ -131,7 +129,7 @@ whatAreThings("one", "two", "three"); //Things passed in: window one two three
 
 var obj = {};
 obj.whatAreThings = whatAreThing;
-obj.whatAreThings("one", "two", "htree"); //Things passed in: [Object object] one two three
+obj.whatAreThings("one", "two", "three"); //Things passed in: [Object object] one two three
 ```
 
 What a pain in the ass!
@@ -141,7 +139,7 @@ So the question becomes. **Why use `this` at all?** And the good news is, in you
 
 # More Uses
 
-`thee` is not just for wrapping functions! You can use it to wrap whole objects, which will return a new object with the same properties but wrapped methods.
+`thee` is not just for wrapping functions. You can use it to wrap whole objects, which will return a new object with the same properties but wrapped methods.
 
 Instead of
 
@@ -167,7 +165,7 @@ var Person = React.createClass(thee({
 			<header>{c.props.name}</header>
 		)
 	},
-	componentWillMount: logMouting
+	componentWillMount: logMouting //yay! this works like it should
 }))
 ```
 
@@ -185,13 +183,13 @@ var Person = React.createClass(thee({
 ## `this` checking
 
 Code using `thee` shouldn't use `this`. Therefore, when first wrapping a function, `thee` will by default attempt to parse the function code for usages of `this` and throw an error if this is found. 
-Sometimes this might not be the desired behavior. In order to disable it pass an optioins object with `{ noThisCheck: true}`
+Sometimes this might not be the desired behavior. In order to disable it, pass an optioins object with `{ noThisCheck: true}`
 
 ```js
 fred.sayHi = thee(function(p) { console.log("Hi from this. " + p.name) }, { noThisCheck: true }) );
 ```
 
-or disable globally
+or disable it globally
 
 ```js
 thee.noThisCheck = true 
@@ -201,4 +199,4 @@ fred.sayHi = thee(function(p) { console.log("Hi from this. " + p.name) } );
 
 # About `thee`
 
-`thee` is written as part of the [New Orleans Open Source Hackathon](http://opensourcenola.org/). The original name was `thus` but a [`thus` library already exists](https://www.npmjs.com/package/thus) that does the exact opposite. Boo on Thus!. The name was suggested by [Gant Laborde](http://www.iconoclastlabs.com/) who is a judge. Hi Gant!
+`thee` is written as part of the [New Orleans Open Source Hackathon](http://opensourcenola.org/). The original name was Thus but a [Thus library that does the exact opposite already exists](https://www.npmjs.com/package/thus). Boo on Thus!. The name was suggested by [Gant Laborde](http://www.iconoclastlabs.com/) who is a judge. Hi Gant!
