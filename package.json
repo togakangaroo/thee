@@ -5,7 +5,9 @@
   "main": "thee.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register test",
-    "test:watch": "mocha --watch --compilers js:babel/register test"
+    "test:watch": "mocha --watch --compilers js:babel/register test",
+	"build": "babel thee.js --out-file thee.es5.js",
+	"build:watch": "babel thee.js --watch --out-file thee.es5.js"
   },
   "keywords": [
     "this",
