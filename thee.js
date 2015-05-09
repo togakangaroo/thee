@@ -1,13 +1,13 @@
 import _ from 'lodash'
 
-let thus = (config) =>
+let thee = (config) =>
 	_.isFunction(config) 
 		?  	function(...args) {
 				return config.apply(null, [this].concat(args));
 			}
 	: _.isObject(config)
-		? 	_.object(_.map(config, (propValue, propName) => [ propName, thus(propValue)] ))
+		? 	_.object(_.map(config, (propValue, propName) => [ propName, thee(propValue)] ))
 	//default
 		: config
 
-export default thus
+export default thee
