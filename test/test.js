@@ -28,3 +28,18 @@ describe("When using thee on a string", () => {
 		thee("hi").should.equal("hi")	
 	)
 })
+
+describe("This checking: When using thee on a function that references `this`", () => {
+	const funcUsingThis = function(a) { return this + a; };
+	beforeEach(() => thee.noThisCheck = false )
+	it("throws an error", () =>
+		should.throws(() => thee(funcUsingThis))
+	)
+	it("doesn't throw an error, when this checking disabled", () =>
+		should.doesNotThrow( thee(funcUsingThis, { noThisCheck: true }) )
+	)
+	it("doesn't throw an error, when this checking disabled globally", () => {
+		thee.noThisCheck = true;
+		should.doesNotThrow( thee(funcUsingThis) );
+	})
+})
