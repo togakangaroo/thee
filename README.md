@@ -34,10 +34,12 @@ $('button').click( thee(ackgnowledgeClick) );
 
 Nice and simple. [See below for more uses](#more-uses)
 
+Thee is written entirely in es6 javascript. An [cross-compiled](thee.es5.js) es5 version is available for those not using a compiler (like [Babel](https://babeljs.io/) with [Jspm](http://jspm.io/). I can't emphasize enough that you should use Jspm).
+
 
 # We don't all agree that `this` is dumb?
 
-Oh boy, let me take you through this and keep an open mind.
+Oh boy. Let me take you through this and keep an open mind.
 
 Let's start with the following code
 

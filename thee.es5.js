@@ -3,20 +3,25 @@
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-var thee = function thee(config) {
-	return isFunction(config) ? function () {
+var callFn = function callFn(fn) {
+	return function () {
 		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
 			args[_key] = arguments[_key];
 		}
 
-		return config.apply(null, [this].concat(args));
-	} : isObject(config) ? objectMap(config, function (propValue, propName) {
+		return fn.apply(null, [this].concat(args));
+	};
+};
+var thee = function thee(config, op) {
+	op || (op = {});
+	var thisCheck = op.noThisCheck || thee.noThisCheck ? noop : checkForThisUsageWithToString;
+	return isFunction(config) ? thisCheck(config) || callFn(config) : isObject(config) ? objectMap(config, function (propValue, propName) {
 		return [propName, thee(propValue)];
 	})
 	//default
 	: config;
 };
-
+thee.noThisCheck = false;
 exports['default'] = thee;
 
 // is* functions just flat out ripped from lodash
@@ -51,5 +56,11 @@ function objectMap(obj, fn) {
 			res[propNameVals[0]] = propNameVals[1];
 		}
 	}return res;
+}
+
+function noop() {}
+function checkForThisUsageWithToString(fn) {
+	if (!/\Wthis\W/.test(fn.toString())) return;
+	throw 'Detected usage of `this` in function. Thee rewires the `this` parameter in functions so referencing it won\'t work as intended. Instead the `this` value will be passed into your function as the first paramter. All other parameters will be shifted over. To disable this check pass { noThisCheck: true }  as a second parameter to thee';
 }
 module.exports = exports['default'];
