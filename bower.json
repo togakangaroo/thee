@@ -1,7 +1,7 @@
 {
   "name": "thee",
   "main": "thee.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/togakangaroo/thee",
   "authors": [
     "George Mauer <gmauer@gmail.com>"
