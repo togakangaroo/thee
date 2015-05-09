@@ -7,8 +7,8 @@ I think we can all agree, the `this` keyword in javascript is dumb. So `thee` ge
 Normally we would write
 
 ```js
-var ackgnowledgeClick = function() {
-	this.textContent = "You Clicked Me";
+var ackgnowledgeClick = function(e) {
+	this.textContent = "You Clicked the button at (" + e.pageX + ", " + e.pageY + ")";
 };
 $('button').on('click', ackgnowledgeClick);
 ```
@@ -26,8 +26,8 @@ and
 ```js
 import thee from 'thee'
 
-var ackgnowledgeClick = function(button) {
-	button.textContent = "You Clicked Me";
+var ackgnowledgeClick = function(button, e) {
+	button.textContent = "You Clicked the button at (" + e.pageX + ", " + e.pageY + ")";
 };
 $('button').click( thee(ackgnowledgeClick) );
 ```
@@ -145,6 +145,7 @@ Instead of
 
 ```js
 var Person = React.createClass({
+	name: "Person component",
 	render: function() {
 		return (
 			<header>{this.props.name}</header>
@@ -160,6 +161,7 @@ you can do
 
 ```js
 var Person = React.createClass(thee({
+	name: "Person component",
 	render: function(c) {
 		return (
 			<header>{c.props.name}</header>
@@ -173,12 +175,15 @@ Heck, wee can even do es6 arrow functions because without `this`, who cares abou
 
 ```js
 var Person = React.createClass(thee({
+	name: "Person component",
 	render:( (c) =>
 		<header>{c.props.name}</header>
 	),
 	componentWillMount: logMouting
 }))
 ```
+
+Note that all other parameters will still be present, they will simply be shifted over by one.
 
 ## `this` checking
 
