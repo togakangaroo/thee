@@ -1,6 +1,6 @@
 {
   "name": "thee",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Micro-utility to shift the `this` context parameter of functions into the first regular parameter position.",
   "main": "thee.js",
   "scripts": {

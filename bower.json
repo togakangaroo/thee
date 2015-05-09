@@ -1,0 +1,31 @@
+{
+  "name": "thee",
+  "main": "thee.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/togakangaroo/thee",
+  "authors": [
+    "George Mauer <gmauer@gmail.com>"
+  ],
+  "description": "Micro-utility to shift the `this` context parameter of functions into the first regular parameter position.",
+  "moduleType": [
+    "es6"
+  ],
+  "keywords": [
+    "this",
+    "scope",
+    "bind",
+    "apply",
+    "utility",
+    "object",
+    "function",
+    "context"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
