@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel/register test",
     "test:watch": "mocha --watch --compilers js:babel/register test",
-	"build": "babel thee.js --modules umd --out-file thee.es5.js",
-	"build:watch": "babel thee.js --modules umd --watch --out-file thee.es5.js"
+    "build": "babel thee.js --modules umd --out-file thee.es5.js && uglifyjs thee.es5.js -o thee.es5.min.js",
+    "build:watch": "onchange ./thee.js -- npm run build"
   },
   "keywords": [
     "this",
@@ -24,12 +24,13 @@
   "devDependencies": {
     "babel": "^5.2.17",
     "mocha": "^2.2.4",
-    "should": "^6.0.1"
+    "onchange": "^1.1.0",
+    "should": "^6.0.1",
+    "uglify-js": "^2.4.21"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "repository": {
-	  "type": "git",
-	  "url": "https://github.com/togakangaroo/thee"
+    "type": "git",
+    "url": "https://github.com/togakangaroo/thee"
   }
 }

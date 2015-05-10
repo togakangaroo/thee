@@ -25,16 +25,18 @@
 		};
 	};
 
+	var _thee = function _thee(val, thisCheck) {
+		return isFunction(val) ? thisCheck(val) || callFn(val) : val;
+	};
+
 	var thee = function thee(config, op) {
 		op || (op = {});
 		op.noThisCheck !== undefined || (op.noThisCheck = thee.noThisCheck);
 		var thisCheck = op.noThisCheck ? noop : checkForThisUsageWithToString;
 
-		return isFunction(config) ? thisCheck(config) || callFn(config) : isObject(config) ? objectMap(config, function (propValue, propName) {
-			return [propName, thee(propValue)];
-		})
-		//default
-		: config;
+		return isObject(config) ? objectMap(config, function (propValue, propName) {
+			return [propName, _thee(propValue, thisCheck)];
+		}) : _thee(config, thisCheck);
 	};
 	thee.noThisCheck = false;
 
@@ -42,14 +44,11 @@
 
 	////////////////////////////////////////////////////////////
 
-	// is* functions just flat out ripped from lodash
-
 	function isObject(value) {
-		var type = typeof value;
-		return type == 'function' || !!value && type == 'object';
+		return !!value && typeof value == 'object';
 	}
 	function isFunction(value) {
-		return typeof value == 'function' || false;
+		return typeof value == 'function';
 	}
 
 	function objectMap(obj, fn) {
@@ -65,6 +64,7 @@
 	function noop() {}
 	function checkForThisUsageWithToString(fn) {
 		if (!/\Wthis\W/.test(fn.toString())) return;
+		console.error && console.error(fn.toString());
 		throw 'Detected usage of `this` in function. Thee rewires the `this` parameter in functions so referencing it won\'t work as intended. Instead the `this` value will be passed into your function as the first paramter. All other parameters will be shifted over. To disable this check pass { noThisCheck: true }  as a second parameter to thee';
 	}
 });
