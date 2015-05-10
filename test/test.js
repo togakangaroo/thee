@@ -1,6 +1,7 @@
 import should from 'should'
 import thee from '../thee'
 
+const getPassedInVals = function(...args) { return {thisIs: this, argsAre: args} }
 
 describe("When using thee on a function", () => {
 	const concatenate = thee( (a, b) => "" + a + b )
@@ -10,10 +11,18 @@ describe("When using thee on a function", () => {
 })
 
 describe("When using thee on an object", () => {
-	const obj = thee({
-		name: "Fred",
-		sayHi: function(me, to) { return me.name + " says hi to " + to }
-	});
+	let obj = null;
+   
+	beforeEach( () => 
+		obj = thee({
+			name: "Fred",
+			sayHi: function(me, to) { return me.name + " says hi to " + to },
+			bestFriend: {
+				name: "Barney",
+				getPassedInVals: getPassedInVals
+			}
+		})
+	);
 
 	it("`this` on a method is rebound to the first parameter", () =>
 		obj.sayHi("Barney").should.equal("Fred says hi to Barney")
@@ -21,6 +30,12 @@ describe("When using thee on an object", () => {
 	it("does not affect properties", () =>
 		obj.name.should.equal("Fred")
 	)
+	it("will not descend recursively into objects", () => {
+		var res = obj.bestFriend.getPassedInVals("foo");
+		res.thisIs.should.equal(obj.bestFriend);
+		res.argsAre[0].should.equal("foo");
+		res.argsAre.length.should.equal(1);
+	})
 })
 
 describe("When using thee on a string", () => {
@@ -28,6 +43,7 @@ describe("When using thee on a string", () => {
 		thee("hi").should.equal("hi")	
 	)
 })
+
 
 describe("This checking: When using thee on a function that references `this`", () => {
 	const funcUsingThis = function(a) { return this + a; };
