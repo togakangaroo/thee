@@ -117,7 +117,7 @@ whatAreThings.call("one", "two", "three", "four");
 * it's not included in the automatic arguments object
 * and you don't get to name it in an nice way
 
-Oh and there's the fact that if you *don't* explicitly use `.call` the programming language [*takes a guess* at what you want `this` to be](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+Oh and there's the fact that if you *don't* explicitly use `.call` the programming language [*takes a guess* at what you want `this` to be](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this). (Cameron Spear [requests that I note here here[(https://github.com/togakangaroo/thee/issues/1) that I am being hyperbolic. Javascript doesn't really *take a guess* so much as follow a [limited though confusing list of rules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this).
 
 ```js 
 whatAreThings("one", "two", "three"); //Things passed in: window one two three
@@ -201,6 +201,23 @@ thee.noThisCheck = true
 //...
 fred.sayHi = thee(function(p) { console.log("Hi from this. " + p.name) } );
 ```
+# Limitations
+
+Thee does not absolve you from ever having to know how `this` works. It is not magic and subject to limitatiosn posed by javascript. For example the following will not work
+
+```js
+var fred = {
+	name: "Fred",
+	sayHi: thee(function(f) { alert(f.name + " says hi"); })
+};
+
+var fredHi = fred.sayHi;
+$('button').click(fredHi); //name will not exist
+//or even
+$('button').click(fred.sayHi); //name will not exist
+```
+
+as at the time the function runs, it has already lost the `fred` context; this is the way javascrpt works and there is simply nothing to be done about it. To preserve context either wrap the entire object so that it can be captured, or use [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) as you normally would.
 
 # About `thee`
 
