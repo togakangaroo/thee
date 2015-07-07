@@ -117,7 +117,7 @@ whatAreThings.call("one", "two", "three", "four");
 * it's not included in the automatic arguments object
 * and you don't get to name it in an nice way
 
-Oh and there's the fact that if you *don't* explicitly use `.call` the programming language [*takes a guess* at what you want `this` to be](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this). (Cameron Spear [requests that I note here here[(https://github.com/togakangaroo/thee/issues/1) that I am being hyperbolic. Javascript doesn't really *take a guess* so much as follow a [limited though confusing list of rules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this).
+Oh and there's the fact that if you *don't* explicitly use `.call` the programming language [*takes a guess* at what you want `this` to be](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this). *(Cameron Spear [requests I note here here](https://github.com/togakangaroo/thee/issues/1) that I am being hyperbolic. Javascript doesn't really *take a guess* so much as follow a [limited though confusing list of rules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this))*.
 
 ```js 
 whatAreThings("one", "two", "three"); //Things passed in: window one two three
