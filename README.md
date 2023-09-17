@@ -217,7 +217,7 @@ $('button').click(fredHi); //name will not exist
 $('button').click(fred.sayHi); //name will not exist
 ```
 
-as at the time the function runs, it has already lost the `fred` context; this is the way javascrpt works and there is simply nothing to be done about it. To preserve context either wrap the entire object so that it can be captured, or use [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) as you normally would.
+as at the time the function runs, it has already lost the `fred` context; this is the way javascript works and there is simply nothing to be done about it. To preserve context either wrap the entire object so that it can be captured, or use [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) as you normally would.
 
 # About `thee`
 
